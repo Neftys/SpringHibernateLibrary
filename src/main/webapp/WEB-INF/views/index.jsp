@@ -22,16 +22,17 @@
 	<h2>List of Books</h2>
 	<table>
 		<tr>
-			<td>id</td> <td>name</td> <td></td>
+			<td>name</td> <td>book description</td> <td></td>
 		</tr>
 		<c:forEach items="${books}" var="book">
 			<tr>
-			<td>${book.id}</td>
 			<td>${book.name}</td>
+				<td>${book.description}</td>
 			</tr>
 		</c:forEach>
 	</table>
 	<br/>
+	<a href="<c:url value='/new' />">Add New Book</a>
 
 </body>
 </html>
