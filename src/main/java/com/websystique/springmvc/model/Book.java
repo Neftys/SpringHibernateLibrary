@@ -1,5 +1,6 @@
 package com.websystique.springmvc.model;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -13,6 +14,8 @@ import java.util.Set;
  * Created by tu_gevelav on 22.09.2016.
  */
 @Component
+
+
 @Entity
 @Table(name = "book")
 public class Book implements Serializable {

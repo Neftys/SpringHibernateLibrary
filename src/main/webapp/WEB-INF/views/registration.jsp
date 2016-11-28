@@ -19,10 +19,10 @@
 </head>
 
 <body>
-
+	<h1>registration.jsp</h1>
 	<h2>Add New Book</h2>
  
-	<form:form method="POST" modelAttribute="book">
+	<form:form method="POST" action="/newBook" modelAttribute="book">
 		<form:input type="hidden" path="id" id="id"/>
 		<table>
 			<tr>

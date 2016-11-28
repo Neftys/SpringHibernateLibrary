@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +37,9 @@ public class AppController {
 	@Autowired
 	MessageSource messageSource;
 
+	@Autowired
+	 Book currentBook;
+
 
 
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
@@ -48,23 +52,48 @@ public class AppController {
 		return "index" ;
 	}
 
-	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/newBook" }, method = RequestMethod.GET)
 	public String newEmployee(ModelMap model) {
 		Book book = new Book();
 		model.addAttribute("book", book);
 		return "registration";
 	}
 
-	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
+	/*
+	@RequestMapping(value = { "/newBook" }, method = RequestMethod.POST)
 	public String saveEmployee(@Valid Book book,
 			ModelMap model) {
 		Author author =new Author();
 		model.addAttribute("book",book);
 		model.addAttribute("author",author);
-		//bookService.saveBook(book);
 
-		return "addAuthor";
+		return "addBookSuc";
 	}
+*/
+	@RequestMapping(value = { "/newBook" }, method = RequestMethod.POST)
+	public String saveBook(@Valid Book book,
+							   ModelMap model) {
+		Author author =new Author();
+		currentBook=new Book();
+		currentBook.setName(book.getName());
+		currentBook.setDescription(book.getDescription());
+		model.addAttribute("book", book);
+		model.addAttribute("author",author);
+		System.out.println(currentBook);
+
+		return "addBookSuc";
+	}
+
+	@RequestMapping(value = { "/newAuthor-{book}" }, method = RequestMethod.GET)
+	public String newAuthor(@PathVariable Book book,
+							   ModelMap model) {
+		Author author =new Author();
+		model.addAttribute("book",book);
+		model.addAttribute("author",author);
+
+		return "index";
+	}
+
 
 	@RequestMapping(value = { "/index" }, method = RequestMethod.GET)
 	public String index(ModelMap model) {
@@ -108,5 +137,12 @@ public class AppController {
 		service.deleteEmployeeBySsn(ssn);
 		return "redirect:/list";
 	}
+
+
+	@ModelAttribute("currentBook")
+	public Book currentBook() {
+		return currentBook;
+	}
+
 
 }
